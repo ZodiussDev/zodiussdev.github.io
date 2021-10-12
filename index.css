@@ -107,6 +107,72 @@ body{
     text-align: center;
     color: #fff;
   }
+  /* dssddsds 
+  gredfadsasd
+  asdadsadsdas
+  */
+  #pass_container{
+    width: 100%;
+    height: 200px;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    float: left;
+    margin-top: 80px;
+  
+  }
+  #pass_inner_container{
+    width: 50%;
+    height: 100%;
+  }
+  #pass_input_container{
+    width: 100%;
+    height: 50px;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    float: left;
+  }
+  #pass_input{
+    width: 60%;
+    height: 40px;
+  
+    color: #1D3354;
+    font-family: Varela Round;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    background-color: Transparent;
+    border-bottom: 2px dashed #1D3354;
+  
+  }
+  #pass_input:focus{
+    box-shadow: 0 10px 30px -17px #1D3354;
+  }
+  #pass_button_container{
+    width: 100%;
+    height: 50px;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    float: left;
+  }
+  #pass_button{
+    width: 60%;
+    height: 40px;
+  
+    font-family: Varela Round;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+  }
   
   #chat_container{
     width: 100%;
