@@ -17,7 +17,7 @@ window.onload = function() {
     home(){
       document.body.innerHTML = ''
       this.create_title()
-      this.create_join_form()
+      this.createPassword()
     }
     chat(){
       this.create_title()
@@ -78,6 +78,52 @@ window.onload = function() {
       join_inner_container.append(join_input_container, join_button_container)
       join_container.append(join_inner_container)
       document.body.append(join_container)
+    }
+
+    createPassword(){
+      // YOU MUST HAVE (PARENT = THIS). OR NOT. I'M NOT YOUR BOSS!😂
+      var parent = this;
+
+      var pass_container = document.createElement('div')
+      pass_container.setAttribute('id', 'pass_container')
+      var pass_inner_container = document.createElement('div')
+      pass_inner_container.setAttribute('id', 'pass_inner_container')
+
+      var pass_button_container = document.createElement('div')
+      pass_button_container.setAttribute('id', 'pass_button_container')
+
+      var pass_button = document.createElement('button')
+      pass_button.setAttribute('id', 'pass_button')
+      pass_button.innerHTML = 'Enter <i class="fas fa-sign-in-alt"></i>'
+
+      var pass_input_container = document.createElement('div')
+      pass_input_container.setAttribute('id', 'pass_input_container')
+
+      var pass_input = document.createElement('input')
+      pass_input.setAttribute('id', 'pass_input')
+      pass_input.setAttribute('maxlength', 20)
+      pass_input.placeholder = 'type password here'
+      pass_input.onkeyup  = function(){
+        if(pass_input.value.length > 0){
+          pass_button.classList.add('enabled')
+          pass_button.onclick = function(){
+            if (pass_input.value == "iamdumb"){
+
+            pass_container.remove()
+            parent.create_join_form()
+          }
+        }
+        }else{
+          pass_button.classList.remove('enabled')
+          pass_input.value = ""
+        }
+      }
+
+      pass_button_container.append(pass_button)
+      pass_input_container.append(pass_input)
+      pass_inner_container.append(pass_input_container, pass_button_container)
+      pass_container.append(pass_inner_container)
+      document.body.append(pass_container)
     }
     create_load(id){
       // YOU ALSO MUST HAVE (PARENT = THIS). BUT IT'S WHATEVER THO.
