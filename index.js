@@ -219,13 +219,25 @@ window.onload = function() {
         return
       }
 
+      
+
       var messages = db.ref('chats/');
       messages.once('value', function(snapshot) {
-        var index = parseFloat(snapshot.numChildren()) + 1
+      var index = parseFloat(snapshot.numChildren()) + 1   
+        var date = new Date()
+          var hours = date.getHours();
+          var minutes = date.getMinutes();
+          var ampm = hours >= 12 ? 'PM' : 'AM';
+          hours = hours % 12;
+          hours = hours ? hours : 12; // the hour '0' should be '12'
+          minutes = minutes < 10 ? '0'+minutes : minutes;
+          var strTime = hours + ':' + minutes + ' ' + ampm;
         db.ref('chats/' + `message_${index}`).set({
           name: parent.get_name(),
           message: message,
-          index: index
+          index: index,
+          date: `${date.getMonth() + 1}/${date.getDate()}/${date.getYear() - 100}`,
+          time: `${strTime}`
         })
         .then(function(){
           parent.refresh_chat()
@@ -273,6 +285,8 @@ window.onload = function() {
         ordered.forEach(function(data) {
           var name = data.name
           var message = data.message
+          var time = data.time
+          var date = data.date
 
           var message_container = document.createElement('div')
           message_container.setAttribute('class', 'message_container')
@@ -287,6 +301,7 @@ window.onload = function() {
           message_user.setAttribute('class', 'message_user')
           message_user.textContent = `${name}`
 
+         
           var message_content_container = document.createElement('div')
           message_content_container.setAttribute('class', 'message_content_container')
 
@@ -294,9 +309,17 @@ window.onload = function() {
           message_content.setAttribute('class', 'message_content')
           message_content.textContent = `${message}`
 
+          var message_date_container = document.createElement('div')
+          message_date_container.setAttribute('class', 'message_date_container')
+
+          var message_date = document.createElement('p')
+          message_date.setAttribute('class', 'message_date')
+          message_date.textContent = `${date}, at ${time}`
+
           message_user_container.append(message_user)
           message_content_container.append(message_content)
-          message_inner_container.append(message_user_container, message_content_container)
+          message_date_container.append(message_date)
+          message_inner_container.append(message_user_container, message_content_container, message_date_container)
           message_container.append(message_inner_container)
 
           chat_content_container.append(message_container)
