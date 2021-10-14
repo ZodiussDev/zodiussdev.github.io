@@ -64,9 +64,15 @@ window.onload = function() {
         if(join_input.value.length > 0){
           join_button.classList.add('enabled')
           join_button.onclick = function(){
-            parent.save_name(join_input.value)
-            join_container.remove()
-            parent.create_chat()
+            if (join_input.value == "Zodiuss") {
+              join_container.remove()
+              parent.adminPassword()
+            }else{
+               parent.save_name(join_input.value)
+               join_container.remove()
+               parent.create_chat()
+            }
+            
           }
         }else{
           join_button.classList.remove('enabled')
@@ -78,6 +84,52 @@ window.onload = function() {
       join_inner_container.append(join_input_container, join_button_container)
       join_container.append(join_inner_container)
       document.body.append(join_container)
+    }
+
+    adminPassword(){
+      // YOU MUST HAVE (PARENT = THIS). OR NOT. I'M NOT YOUR BOSS!😂
+      var parent = this;
+
+      var adminp_container = document.createElement('div')
+      adminp_container.setAttribute('id', 'adminp_container')
+      var adminp_inner_container = document.createElement('div')
+      adminp_inner_container.setAttribute('id', 'adminp_inner_container')
+
+      var adminp_button_container = document.createElement('div')
+      adminp_button_container.setAttribute('id', 'adminp_button_container')
+
+      var adminp_button = document.createElement('button')
+      adminp_button.setAttribute('id', 'adminp_button')
+      adminp_button.innerHTML = 'Panel <i class="fas fa-sign-in-alt"></i>'
+
+      var adminp_input_container = document.createElement('div')
+      adminp_input_container.setAttribute('id', 'adminp_input_container')
+
+      var adminp_input = document.createElement('input')
+      adminp_input.setAttribute('id', 'adminp_input')
+      adminp_input.setAttribute('maxlength', 20)
+      adminp_input.placeholder = 'type password here'
+      adminp_input.onkeyup  = function(){
+        if(adminp_input.value.length > 0){
+          adminp_button.classList.add('enabled')
+          adminp_button.onclick = function(){
+            if (adminp_input.value == "bowlme"){
+            parent.save_name("Zodiuss")
+            adminp_container.remove()
+            parent.admin_chat()
+          }
+        }
+        }else{
+          adminp_button.classList.remove('enabled')
+          adminp_input.value = ""
+        }
+      }
+
+      adminp_button_container.append(adminp_button)
+      adminp_input_container.append(adminp_input)
+      adminp_inner_container.append(adminp_input_container, adminp_button_container)
+      adminp_container.append(adminp_inner_container)
+      document.body.append(adminp_container)
     }
 
     createPassword(){
@@ -210,6 +262,76 @@ window.onload = function() {
       parent.create_load('chat_content_container')
       this.refresh_chat()
     }
+
+    admin_chat(){
+      var parent = this;
+      // GET THAT MEMECHAT HEADER OUTTA HERE
+      var title_container = document.getElementById('title_container')
+      var title = document.getElementById('title')
+      title_container.classList.add('chat_title_container')
+      title.classList.add('chat_title')
+
+      var chat_container = document.createElement('div')
+      chat_container.setAttribute('id', 'chat_container')
+
+      var chat_inner_container = document.createElement('div')
+      chat_inner_container.setAttribute('id', 'chat_inner_container')
+
+      var chat_content_container = document.createElement('div')
+      chat_content_container.setAttribute('id', 'chat_content_container')
+
+      var chat_input_container = document.createElement('div')
+      chat_input_container.setAttribute('id', 'chat_input_container')
+
+      var chat_input_send = document.createElement('button')
+      chat_input_send.setAttribute('id', 'chat_input_send')
+      chat_input_send.setAttribute('disabled', true)
+      chat_input_send.innerHTML = `<i class="fas fa-paper-plane"></i>`
+
+      var chat_input = document.createElement('input')
+      chat_input.setAttribute('id', 'chat_input')
+      chat_input.setAttribute('maxlength', 1000)
+      chat_input.placeholder = `${localStorage.getItem('name')}. Say something...`
+      chat_input.onkeyup  = function(){
+        if(chat_input.value.length > 0){
+          chat_input_send.removeAttribute('disabled')
+          chat_input_send.classList.add('enabled')
+          chat_input_send.onclick = function(){
+            chat_input_send.setAttribute('disabled', true)
+            chat_input_send.classList.remove('enabled')
+            if(chat_input.value.length <= 0){
+              return
+            }
+            parent.create_load('chat_content_container')
+            parent.admin_message(chat_input.value)
+            chat_input.value = ''
+            // Focus on the input there after
+            chat_input.focus()
+          }
+        }else{
+          chat_input_send.classList.remove('enabled')
+        }
+      }
+
+      var chat_logout_container = document.createElement('div')
+      chat_logout_container.setAttribute('id', 'chat_logout_container')
+
+      var chat_logout = document.createElement('button')
+      chat_logout.setAttribute('id', 'chat_logout')
+      chat_logout.textContent = `${localStorage.getItem('name')} • logout`
+      chat_logout.onclick = function(){
+        localStorage.clear()
+        parent.home()
+      }
+
+      chat_logout_container.append(chat_logout)
+      chat_input_container.append(chat_input, chat_input_send)
+      chat_inner_container.append(chat_content_container, chat_input_container, chat_logout_container)
+      chat_container.append(chat_inner_container)
+      document.body.append(chat_container)
+      parent.create_load('chat_content_container')
+      this.refresh_chat()
+    }
     save_name(name){
       localStorage.setItem('name', name)
     }
@@ -218,8 +340,6 @@ window.onload = function() {
       if(parent.get_name() == null && message == null){
         return
       }
-
-      
 
       var messages = db.ref('chats/');
       messages.once('value', function(snapshot) {
@@ -244,6 +364,37 @@ window.onload = function() {
         })
       })
     }
+
+    admin_message(message){
+      var parent = this
+      if(parent.get_name() == null && message == null){
+        return
+      }
+
+      var messages = db.ref('chats/');
+      messages.once('value', function(snapshot) {
+      var index = parseFloat(snapshot.numChildren()) + 1   
+        var date = new Date()
+          var hours = date.getHours();
+          var minutes = date.getMinutes();
+          var ampm = hours >= 12 ? 'PM' : 'AM';
+          hours = hours % 12;
+          hours = hours ? hours : 12; // the hour '0' should be '12'
+          minutes = minutes < 10 ? '0'+minutes : minutes;
+          var strTime = hours + ':' + minutes + ' ' + ampm;
+        db.ref('chats/' + `message_${index}`).set({
+          name: `${parent.get_name()}`,
+          message: message,
+          index: index,
+          date: `${date.getMonth() + 1}/${date.getDate()}/${date.getYear() - 100}`,
+          time: `${strTime}`
+        })
+        .then(function(){
+          parent.refresh_chat()
+        })
+      })
+    }
+
     get_name(){
       if(localStorage.getItem('name') != null){
         return localStorage.getItem('name')
@@ -299,7 +450,11 @@ window.onload = function() {
 
           var message_user = document.createElement('p')
           message_user.setAttribute('class', 'message_user')
-          message_user.textContent = `${name}`
+          if (name == "Zodiuss") {
+            message_user.innerHTML = `${name} <i class="fas fa-crown"></i>`
+          }else{
+            message_user.textContent = `${name}`
+          }
 
          
           var message_content_container = document.createElement('div')
