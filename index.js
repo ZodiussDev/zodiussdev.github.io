@@ -454,7 +454,7 @@ window.onload = function() {
             message_user.innerHTML = `${name} <i class="fas fa-crown"></i>`
           }else{
             if (name == "Raringsmile") {
-              message_user.innerHTML = `${name} <i class="fas fa-smile"></i>`
+              message_user.innerHTML = `${name} <i class="fab fa-mandalorian"></i>`
             }else{
               message_user.textContent = `${name}`
             }
