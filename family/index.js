@@ -3,13 +3,14 @@ window.onload = function() {
     // import { initializeApp } from "firebase/app";
     // Your web app's Firebase configuration
     const firebaseConfig = {
-    apiKey: "AIzaSyCAakQtXfIIGJtg_tOYgXCI_hZlz79RBwg",
-    authDomain: "zodiusschat-c3d2d.firebaseapp.com",
-    projectId: "zodiusschat-c3d2d",
-    storageBucket: "zodiusschat-c3d2d.appspot.com",
-    messagingSenderId: "675812023236",
-    appId: "1:675812023236:web:251d3df129dbc45a262291"
-    };
+    apiKey: "AIzaSyD0sFkx_3FhR5i1UM29e9l3xY3Y-ANWDuc",
+    authDomain: "zodiusschatfamily.firebaseapp.com",
+    databaseURL: "https://zodiusschatfamily-default-rtdb.firebaseio.com",
+    projectId: "zodiusschatfamily",
+    storageBucket: "zodiusschatfamily.appspot.com",
+    messagingSenderId: "73450714694",
+    appId: "1:73450714694:web:68727c36236877438cfc47"
+  };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   var db = firebase.database()
