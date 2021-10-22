@@ -161,7 +161,7 @@ window.onload = function() {
         if(pass_input.value.length > 0){
           pass_button.classList.add('enabled')
           pass_button.onclick = function(){
-            if (pass_input.value == "iamdumb"){
+            if (pass_input.value == "familychat2"){
 
             pass_container.remove()
             parent.create_join_form()
